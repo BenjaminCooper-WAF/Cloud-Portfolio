@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Benjamin Cooper — AWS Certified Cloud Engineer specialising in Terraform, DevOps, CI/CD, cloud security and scalable AWS platforms." />
+  <title>Benjamin Cooper | AWS Cloud Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav container">
+      <a href="#home" class="brand"><span class="brand-mark">BC</span><span>Benjamin Cooper</span></a>
+      <button class="menu-toggle" aria-label="Open menu">☰</button>
+      <div class="nav-links">
+        <a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#experience">Experience</a><a href="#contact">Contact</a>
+      </div>
+      <button class="theme-toggle" aria-label="Toggle theme">☀</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="hero section">
+      <div class="container hero-grid">
+        <div class="hero-copy reveal">
+          <p class="eyebrow">AWS CERTIFIED SOLUTIONS ARCHITECT</p>
+          <h1>Building secure, scalable and automated cloud platforms.</h1>
+          <p class="hero-text">I am Benjamin Cooper, an AWS Cloud Engineer specialising in Terraform, Infrastructure as Code, CI/CD, cloud security and resilient AWS architecture.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#projects">View Projects</a>
+            <a class="btn btn-secondary" href="Benjamin-Cooper-CV.pdf" download>Download CV</a>
+          </div>
+          <div class="hero-meta"><span>UK based</span><span>Open to remote opportunities</span><span>AWS • Terraform • DevOps</span></div>
+        </div>
+
+        <div class="cloud-console reveal">
+          <div class="console-top"><div class="dots"><span></span><span></span><span></span></div><span>cloud-platform.deploy</span></div>
+          <pre><code><span class="muted">$ terraform init</span>
+<span class="success">Terraform successfully initialized.</span>
+
+<span class="muted">$ terraform plan</span>
+Plan: <span class="accent">28 to add</span>, 0 to change, 0 to destroy.
+
+<span class="muted">$ terraform apply -auto-approve</span>
+<span class="success">Apply complete! Resources: 28 added.</span>
+
+<span class="muted">$ aws cloudfront create-invalidation</span>
+<span class="success">Deployment complete.</span></code></pre>
+          <div class="architecture-mini"><div class="node">Route 53</div><span>→</span><div class="node">CloudFront</div><span>→</span><div class="node">ALB</div><span>→</span><div class="node">EC2</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="trust-strip"><div class="container trust-grid"><div><strong>3+ years</strong><span>Cloud experience</span></div><div><strong>40%</strong><span>Faster release cycles</span></div><div><strong>AWS SAA</strong><span>Certified</span></div><div><strong>Remote-first</strong><span>Collaboration mindset</span></div></div></section>
+
+    <section id="about" class="section"><div class="container split"><div class="section-heading reveal"><p class="eyebrow">ABOUT ME</p><h2>Engineering cloud infrastructure with clarity and purpose.</h2></div><div class="about-copy reveal"><p>I design, automate and support AWS infrastructure with a strong focus on security, reliability, cost awareness and maintainability.</p><p>My experience spans cloud networking, identity and access management, monitoring, high availability, disaster recovery and CI/CD automation. I enjoy translating business requirements into practical cloud solutions that are well documented and easy for teams to operate.</p><p>I am currently focused on remote Cloud Engineer, DevOps Engineer, Platform Engineer and Infrastructure Engineer opportunities.</p></div></div></section>
+
+    <section id="skills" class="section section-alt"><div class="container"><div class="section-heading centered reveal"><p class="eyebrow">CORE CAPABILITIES</p><h2>Cloud engineering across infrastructure, automation and operations.</h2></div><div class="skill-grid">
+      <article class="card reveal"><div class="icon">☁</div><h3>AWS Architecture</h3><p>EC2, VPC, S3, RDS, Lambda, Route 53, CloudFront, IAM, WAF and CloudWatch.</p></article>
+      <article class="card reveal"><div class="icon">⌘</div><h3>Infrastructure as Code</h3><p>Terraform modules, reusable environments, remote state and version-controlled infrastructure.</p></article>
+      <article class="card reveal"><div class="icon">⚙</div><h3>CI/CD & Automation</h3><p>GitHub Actions, Jenkins, AWS CodePipeline, CodeBuild, Bash and Python automation.</p></article>
+      <article class="card reveal"><div class="icon">🛡</div><h3>Security</h3><p>Least-privilege IAM, AWS WAF, secrets management, encryption and network segmentation.</p></article>
+      <article class="card reveal"><div class="icon">◉</div><h3>Monitoring</h3><p>CloudWatch dashboards, logs, alarms, SNS notifications and operational runbooks.</p></article>
+      <article class="card reveal"><div class="icon">⬢</div><h3>Containers & Systems</h3><p>Docker, Kubernetes fundamentals, Linux administration, networking and troubleshooting.</p></article>
+    </div><div class="tag-cloud reveal"><span>AWS</span><span>Terraform</span><span>Linux</span><span>Python</span><span>Docker</span><span>GitHub Actions</span><span>Jenkins</span><span>CI/CD</span><span>Cloud Security</span><span>Networking</span><span>Disaster Recovery</span><span>Cost Optimisation</span></div></div></section>
+
+    <section id="projects" class="section"><div class="container"><div class="section-heading reveal"><p class="eyebrow">SELECTED PROJECTS</p><h2>Production-style cloud projects.</h2></div><div class="project-grid">
+      <article class="project-card reveal"><div class="project-number">01</div><p class="project-label">AWS • TERRAFORM • SECURITY</p><h3>Secure Three-Tier AWS Platform</h3><p>Designed a highly available architecture using public and private subnets, an Application Load Balancer, Auto Scaling, RDS Multi-AZ, Secrets Manager and CloudWatch monitoring.</p><div class="project-tags"><span>VPC</span><span>ALB</span><span>EC2</span><span>RDS</span></div><a href="https://github.com/BenjaminCooper-WAF" target="_blank" rel="noopener">View repository →</a></article>
+      <article class="project-card reveal"><div class="project-number">02</div><p class="project-label">CI/CD • DEVOPS • AUTOMATION</p><h3>Automated Terraform Delivery Pipeline</h3><p>Built a deployment workflow that validates, plans and applies Terraform changes through Git-based automation, with controlled approvals and reproducible infrastructure.</p><div class="project-tags"><span>Terraform</span><span>GitHub Actions</span><span>Jenkins</span></div><a href="https://github.com/BenjaminCooper-WAF" target="_blank" rel="noopener">View repository →</a></article>
+      <article class="project-card reveal"><div class="project-number">03</div><p class="project-label">SERVERLESS • CDN • DNS</p><h3>Global Portfolio Hosting Platform</h3><p>Deployed a secure static application through Amazon S3, CloudFront, Route 53 and ACM, with automated cache invalidation and HTTPS delivery.</p><div class="project-tags"><span>S3</span><span>CloudFront</span><span>Route 53</span><span>ACM</span></div><a href="https://github.com/BenjaminCooper-WAF" target="_blank" rel="noopener">View repository →</a></article>
+    </div></div></section>
+
+    <section id="experience" class="section section-alt"><div class="container"><div class="section-heading reveal"><p class="eyebrow">EXPERIENCE</p><h2>Professional impact.</h2></div><div class="timeline">
+      <article class="timeline-item reveal"><div class="timeline-date">2022 — 2026</div><div><h3>Cloud Engineer</h3><p class="company">BKS</p><ul><li>Automated AWS build workflows with CodeBuild and CodePipeline, reducing release cycles by 40%.</li><li>Implemented CloudWatch dashboards, alarms and log monitoring for faster operational visibility.</li><li>Improved resilience through S3 Cross-Region Replication and RDS Multi-AZ architecture.</li><li>Strengthened security through IAM, Security Groups and AWS WAF controls.</li></ul></div></article>
+      <article class="timeline-item reveal"><div class="timeline-date">2021 — 2022</div><div><h3>Technical Administrator</h3><p class="company">PCS</p><ul><li>Managed access controls, endpoint protection, policy enforcement and cloud-based backups.</li><li>Supported secure collaboration through SharePoint, Microsoft 365 and documented processes.</li></ul></div></article>
+      <article class="timeline-item reveal"><div class="timeline-date">2020 — 2021</div><div><h3>Operations Assistant</h3><p class="company">Biffa</p><ul><li>Tracked operational KPIs, coordinated stakeholders and supported process improvement.</li><li>Developed strong communication, documentation and cross-functional collaboration skills.</li></ul></div></article>
+    </div></div></section>
+
+    <section class="section certification"><div class="container certification-card reveal"><div><p class="eyebrow">CERTIFICATION</p><h2>AWS Certified Solutions Architect – Associate</h2><p>Validated knowledge of secure, resilient, high-performing and cost-optimised AWS architectures.</p></div><div class="badge">AWS<br><span>SAA</span></div></div></section>
+
+    <section id="contact" class="section contact-section"><div class="container contact-card reveal"><div><p class="eyebrow">LET'S CONNECT</p><h2>Looking for a cloud engineer who can build and automate with ownership?</h2><p>I am open to remote Cloud, DevOps, Platform and Infrastructure Engineering opportunities.</p></div><div class="contact-actions"><a class="btn btn-primary" href="mailto:benjam9191@gmail.com">Email Me</a><a class="btn btn-secondary" href="https://www.linkedin.com/in/benjamin-cooper-46140b385/" target="_blank" rel="noopener">LinkedIn</a><a class="btn btn-secondary" href="https://github.com/BenjaminCooper-WAF" target="_blank" rel="noopener">GitHub</a></div></div></section>
+  </main>
+
+  <footer><div class="container footer-inner"><p>© <span id="year"></span> Benjamin Cooper. Built for the cloud.</p><a href="#home">Back to top ↑</a></div></footer>
+  <script src="script.js"></script>
+</body>
+</html>
