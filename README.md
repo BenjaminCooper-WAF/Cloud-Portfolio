@@ -1,120 +1,247 @@
-# Benjamin Cooper — AWS-Hosted Cloud Portfolio
+# ☁️ Benjamin Cooper | AWS Cloud Portfolio
 
-This project deploys the portfolio using:
+Welcome to my personal cloud engineering portfolio.
 
-- Private Amazon S3 bucket
-- Amazon CloudFront CDN
-- AWS Certificate Manager HTTPS certificate
-- Amazon Route 53 DNS records
-- Terraform infrastructure
-- GitHub Actions deployment using AWS OIDC
+This project isn't just a website—it's a demonstration of how I design, automate and deploy secure cloud infrastructure using AWS and Infrastructure as Code.
 
-## Architecture
+Rather than manually creating resources through the AWS Console, every part of this platform is deployed using Terraform and automatically published through GitHub Actions.
 
-GitHub push → GitHub Actions → private S3 bucket → CloudFront → Route 53 custom domain
+The goal was to build something that reflects how I would approach a real production deployment: secure, repeatable, automated and easy to maintain.
 
-The S3 bucket is not public. CloudFront uses Origin Access Control to retrieve the website files.
+---
 
-## Prerequisites
+# Architecture
 
-Install:
+```
+GitHub
+    │
+    ▼
+GitHub Actions
+    │
+    ▼
+Amazon S3 (Private)
+    │
+    ▼
+CloudFront CDN
+    │
+    ▼
+AWS Certificate Manager
+    │
+    ▼
+Route 53
+    │
+    ▼
+Custom Domain
+```
 
-- Git
-- Terraform 1.6 or later
-- AWS CLI
-- An AWS account
-- A domain with a public hosted zone in Route 53
+The website itself is hosted in a **private S3 bucket**.
 
-Configure local AWS access for the initial infrastructure deployment:
+Users never access S3 directly. Instead, CloudFront securely retrieves the content using **Origin Access Control (OAC)** before serving it globally over HTTPS.
+
+This improves both security and performance.
+
+---
+
+# Why I Built It This Way
+
+I wanted this project to demonstrate cloud engineering best practices rather than simply hosting a static website.
+
+Some of the key design decisions include:
+
+- Infrastructure fully managed with Terraform
+- Private S3 bucket with Block Public Access enabled
+- CloudFront used as the public entry point
+- HTTPS provided by AWS Certificate Manager
+- DNS managed through Route 53
+- Automated deployments using GitHub Actions
+- IAM role assumption with GitHub OIDC instead of long-lived AWS access keys
+
+This creates a deployment that is secure, repeatable and easy to update.
+
+---
+
+# Technologies Used
+
+### AWS
+
+- Amazon S3
+- CloudFront
+- Route 53
+- ACM
+- IAM
+- OIDC
+
+### Infrastructure as Code
+
+- Terraform
+
+### CI/CD
+
+- GitHub Actions
+
+### Languages
+
+- HTML
+- CSS
+- JavaScript
+
+---
+
+# Getting Started
+
+Clone the repository
 
 ```bash
-aws configure
-aws sts get-caller-identity
+git clone https://github.com/YOUR_USERNAME/benjamin-cloud-portfolio.git
+
+cd benjamin-cloud-portfolio
 ```
 
-## 1. Add your CV
+---
 
-Place your CV in:
+# Configure Terraform
 
-```text
-site/Benjamin-Cooper-CV.pdf
-```
-
-## 2. Configure Terraform
+Move into the Terraform directory
 
 ```bash
 cd infrastructure/terraform
+```
+
+Copy the example variables file
+
+```bash
 cp terraform.tfvars.example terraform.tfvars
 ```
 
-Edit `terraform.tfvars` with:
+Update the values for:
 
-- Your root domain
-- Your `www` domain
-- Route 53 hosted zone ID
+- Domain name
+- Route53 Hosted Zone ID
 - GitHub username
 - Repository name
 
-## 3. Deploy the AWS infrastructure
+---
+
+# Deploy the Infrastructure
+
+Initialise Terraform
 
 ```bash
 terraform init
-terraform fmt -check
+```
+
+Validate the configuration
+
+```bash
 terraform validate
+```
+
+Review the execution plan
+
+```bash
 terraform plan
+```
+
+Deploy
+
+```bash
 terraform apply
 ```
 
-CloudFront and certificate deployment can take several minutes.
+CloudFront deployments and SSL certificate validation may take several minutes.
 
-## 4. Upload the website for the first time
+---
 
-Use the Terraform outputs:
+# Upload the Website
+
+Once Terraform has finished, retrieve the outputs
 
 ```bash
 terraform output
 ```
 
-Then run:
+Upload the website
 
 ```bash
-aws s3 sync site/ s3://YOUR_BUCKET_NAME --delete --exclude "ADD-YOUR-CV-HERE.txt"
-
-aws cloudfront create-invalidation   --distribution-id YOUR_DISTRIBUTION_ID   --paths "/*"
+aws s3 sync site/ s3://YOUR_BUCKET_NAME --delete
 ```
 
-## 5. Connect GitHub Actions
-
-Create a GitHub repository and push this project.
-
-In **GitHub → Settings → Secrets and variables → Actions**, add:
-
-### Repository secret
-
-```text
-AWS_DEPLOY_ROLE_ARN
-```
-
-Set it to the `github_actions_role_arn` Terraform output.
-
-### Repository variables
-
-```text
-AWS_REGION
-S3_BUCKET_NAME
-CLOUDFRONT_DISTRIBUTION_ID
-```
-
-Use the matching Terraform outputs. After that, every push to `main` that changes `site/` will automatically deploy the website.
-
-## 6. Open the website
-
-Terraform outputs the final address:
+Refresh the CloudFront cache
 
 ```bash
-terraform output website_url
+aws cloudfront create-invalidation \
+--distribution-id YOUR_DISTRIBUTION_ID \
+--paths "/*"
 ```
 
-## Important
+---
 
-This package is ready for deployment, but it cannot deploy itself until you provide access to your AWS account, Route 53 hosted zone and chosen domain.
+# Continuous Deployment
+
+After the initial deployment, everything is automated.
+
+Whenever I push changes to the **main** branch, GitHub Actions:
+
+- Builds the project
+- Uploads the updated files to Amazon S3
+- Removes deleted files
+- Invalidates the CloudFront cache
+- Deploys the latest version worldwide
+
+No manual uploads are required.
+
+---
+
+# Security
+
+Security was an important consideration throughout this project.
+
+Rather than exposing the S3 bucket publicly, I chose to:
+
+- Keep the bucket private
+- Use Origin Access Control
+- Use HTTPS everywhere
+- Enable encryption
+- Use GitHub OIDC authentication
+- Avoid storing long-lived AWS credentials
+
+These are the same principles I'd apply when deploying production workloads.
+
+---
+
+# Future Improvements
+
+Some enhancements I will be adding in the future include:
+
+- Next.js migration
+- Automated Lighthouse performance testing
+- Terraform modules
+- AWS WAF
+- CloudWatch monitoring
+- AWS Budgets alerts
+- GitHub API integration to automatically display new projects
+- Interactive architecture diagrams
+
+---
+
+# About Me
+
+I'm an AWS Certified Solutions Architect with a passion for building secure, scalable and automated cloud infrastructure.
+
+I'm currently focused on Cloud Engineering, Platform Engineering and DevOps, and I'm always looking for opportunities to improve my skills through hands-on projects like this one.
+
+If you'd like to connect, feel free to reach out.
+
+**LinkedIn**
+
+https://linkedin.com/in/benjamin-cooper-46140b385
+
+**GitHub**
+
+https://github.com/BenjaminCooper-WAF
+
+---
+
+## Thank you for taking the time to explore my project.
+
+If you're a recruiter, hiring manager or fellow engineer, I'd love to hear your feedback.
