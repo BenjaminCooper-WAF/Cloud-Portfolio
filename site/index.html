@@ -73,6 +73,32 @@ Plan: <span class="accent">28 to add</span>, 0 to change, 0 to destroy.
       <article class="project-card reveal"><div class="project-number">03</div><p class="project-label">SERVERLESS • CDN • DNS</p><h3>Global Portfolio Hosting Platform</h3><p>Deployed a secure static application through Amazon S3, CloudFront, Route 53 and ACM, with automated cache invalidation and HTTPS delivery.</p><div class="project-tags"><span>S3</span><span>CloudFront</span><span>Route 53</span><span>ACM</span></div><a href="https://github.com/BenjaminCooper-WAF" target="_blank" rel="noopener">View repository →</a></article>
     </div></div></section>
 
+<section id="projects" class="github-projects-section">
+  <div class="section-heading">
+    <p class="section-subtitle">Latest work</p>
+    <h2>GitHub Projects</h2>
+    <p>My latest AWS, cloud, Terraform and DevOps projects.</p>
+  </div>
+
+  <p id="github-loading">Loading GitHub projects...</p>
+
+  <p id="github-error" hidden>
+    Unable to load GitHub projects.
+  </p>
+
+  <div id="github-projects-grid" class="github-projects-grid"></div>
+
+  <div class="github-profile-button">
+    <a
+      href="https://github.com/BenjaminCooper-WAF"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      View all projects on GitHub
+    </a>
+  </div>
+</section>
+
     <section id="experience" class="section section-alt"><div class="container"><div class="section-heading reveal"><p class="eyebrow">EXPERIENCE</p><h2>Professional impact.</h2></div><div class="timeline">
       <article class="timeline-item reveal"><div class="timeline-date">2022 — 2026</div><div><h3>Cloud Engineer</h3><p class="company">BKS</p><ul><li>Automated AWS build workflows with CodeBuild and CodePipeline, reducing release cycles by 40%.</li><li>Implemented CloudWatch dashboards, alarms and log monitoring for faster operational visibility.</li><li>Improved resilience through S3 Cross-Region Replication and RDS Multi-AZ architecture.</li><li>Strengthened security through IAM, Security Groups and AWS WAF controls.</li></ul></div></article>
       <article class="timeline-item reveal"><div class="timeline-date">2021 — 2022</div><div><h3>Technical Administrator</h3><p class="company">PCS</p><ul><li>Managed access controls, endpoint protection, policy enforcement and cloud-based backups.</li><li>Supported secure collaboration through SharePoint, Microsoft 365 and documented processes.</li></ul></div></article>
@@ -86,5 +112,45 @@ Plan: <span class="accent">28 to add</span>, 0 to change, 0 to destroy.
 
   <footer><div class="container footer-inner"><p>© <span id="year"></span> Benjamin Cooper. Built for the cloud.</p><a href="#home">Back to top ↑</a></div></footer>
   <script src="script.js"></script>
+</body>
+</html>
+
+<section id="github-projects" class="projects-section">
+  <div class="section-heading">
+    <span class="section-label">Latest work</span>
+    <h2>GitHub Projects</h2>
+    <p>
+      My latest cloud, DevOps, Terraform and automation projects,
+      loaded directly from GitHub.
+    </p>
+  </div>
+
+  <div id="projects-loading" class="projects-status">
+    Loading projects...
+  </div>
+
+  <div id="projects-error" class="projects-status projects-error" hidden>
+    GitHub projects could not be loaded.
+  </div>
+
+  <div id="projects-grid" class="projects-grid"></div>
+
+  <div class="github-profile-link">
+    <a
+      href="https://github.com/BenjaminCooper-WAF"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      View all projects on GitHub →
+    </a>
+  </div>
+</section>
+
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+/>
+
+  <script src="js/github-projects.js" defer></script>
 </body>
 </html>
