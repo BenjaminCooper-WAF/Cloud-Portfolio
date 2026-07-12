@@ -1,4 +1,4 @@
-# ☁️ Benjamin Cooper | AWS Cloud Portfolio
+# ☁️ AWS Cloud Portfolio
 
 Welcome to my personal cloud engineering portfolio.
 
