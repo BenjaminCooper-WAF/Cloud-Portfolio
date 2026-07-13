@@ -1,26 +1,14 @@
-"use strict";
+console.log("GitHub projects JavaScript loaded");
 
 const GITHUB_USERNAME = "BenjaminCooper-WAF";
 const MAX_PROJECTS = 6;
 
-// Add repository names here if you do not want them displayed.
 const EXCLUDED_REPOSITORIES = [
   "BenjaminCooper-WAF",
 ];
 
-// Only repositories containing at least one of these topics will be shown.
-// Leave the array empty to display all eligible repositories.
-const REQUIRED_TOPICS = [
-  "aws",
-  "cloud",
-  "devops",
-  "terraform",
-  "docker",
-  "kubernetes",
-  "python",
-  "automation",
-  "portfolio",
-];
+// Leave empty to display all public, non-fork repositories.
+const REQUIRED_TOPICS = [];
 
 const projectsGrid = document.getElementById("projects-grid");
 const loadingMessage = document.getElementById("projects-loading");
@@ -54,6 +42,10 @@ function formatRepositoryName(name) {
 }
 
 function formatDate(dateString) {
+  if (!dateString) {
+    return "Recently";
+  }
+
   return new Intl.DateTimeFormat("en-GB", {
     day: "numeric",
     month: "short",
@@ -62,7 +54,12 @@ function formatDate(dateString) {
 }
 
 function repositoryIsEligible(repository) {
-  if (repository.fork || repository.archived || repository.disabled) {
+  if (
+    repository.fork ||
+    repository.archived ||
+    repository.disabled ||
+    repository.private
+  ) {
     return false;
   }
 
@@ -70,6 +67,7 @@ function repositoryIsEligible(repository) {
     return false;
   }
 
+  // Empty list means display all eligible repositories.
   if (REQUIRED_TOPICS.length === 0) {
     return true;
   }
@@ -113,23 +111,25 @@ function createProjectCard(repository) {
     "Explore the source code, infrastructure configuration and project documentation on GitHub.";
 
   const language = repository.language || "Code";
+
   const languageIcon =
     languageIcons[repository.language] || "fa-solid fa-code";
 
-  const liveProjectLink = repository.homepage
-    ? `
-      <a
-        href="${escapeHTML(repository.homepage)}"
-        class="project-link project-link-secondary"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="View live version of ${escapeHTML(title)}"
-      >
-        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-        Live Demo
-      </a>
-    `
-    : "";
+  const liveProjectLink =
+    repository.homepage && repository.homepage.trim() !== ""
+      ? `
+        <a
+          href="${escapeHTML(repository.homepage)}"
+          class="project-link project-link-secondary"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="View live version of ${escapeHTML(title)}"
+        >
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          Live Demo
+        </a>
+      `
+      : "";
 
   return `
     <article class="github-project-card">
@@ -161,12 +161,12 @@ function createProjectCard(repository) {
 
         <span>
           <i class="fa-regular fa-star" aria-hidden="true"></i>
-          ${repository.stargazers_count}
+          ${repository.stargazers_count ?? 0}
         </span>
 
         <span>
           <i class="fa-solid fa-code-fork" aria-hidden="true"></i>
-          ${repository.forks_count}
+          ${repository.forks_count ?? 0}
         </span>
       </div>
 
@@ -194,12 +194,16 @@ async function fetchGitHubProjects() {
       GITHUB_USERNAME
     )}/repos?sort=pushed&direction=desc&per_page=30&type=owner`;
 
+  console.log("Loading repositories from:", endpoint);
+
   const response = await fetch(endpoint, {
     headers: {
       Accept: "application/vnd.github+json",
       "X-GitHub-Api-Version": "2022-11-28",
     },
   });
+
+  console.log("GitHub response status:", response.status);
 
   if (!response.ok) {
     throw new Error(
@@ -211,11 +215,25 @@ async function fetchGitHubProjects() {
 }
 
 async function displayGitHubProjects() {
+  if (!projectsGrid) {
+    console.error(
+      'GitHub integration error: Missing element with id="projects-grid".'
+    );
+    return;
+  }
+
   try {
-    loadingMessage.hidden = false;
-    errorMessage.hidden = true;
+    if (loadingMessage) {
+      loadingMessage.hidden = false;
+    }
+
+    if (errorMessage) {
+      errorMessage.hidden = true;
+    }
 
     const repositories = await fetchGitHubProjects();
+
+    console.log("Repositories received:", repositories);
 
     const selectedRepositories = repositories
       .filter(repositoryIsEligible)
@@ -226,13 +244,14 @@ async function displayGitHubProjects() {
       )
       .slice(0, MAX_PROJECTS);
 
+    console.log("Repositories selected:", selectedRepositories);
+
     if (selectedRepositories.length === 0) {
       projectsGrid.innerHTML = `
         <p class="projects-status">
           No matching public projects are currently available.
         </p>
       `;
-
       return;
     }
 
@@ -242,11 +261,29 @@ async function displayGitHubProjects() {
   } catch (error) {
     console.error("Unable to load GitHub repositories:", error);
 
-    projectsGrid.innerHTML = "";
-    errorMessage.hidden = false;
+    projectsGrid.innerHTML = `
+      <p class="projects-status projects-error">
+        Unable to load GitHub projects: ${escapeHTML(error.message)}
+      </p>
+    `;
+
+    if (errorMessage) {
+      errorMessage.hidden = false;
+      errorMessage.textContent =
+        `Unable to load projects: ${error.message}`;
+    }
   } finally {
-    loadingMessage.hidden = true;
+    if (loadingMessage) {
+      loadingMessage.hidden = true;
+    }
   }
 }
 
-document.addEventListener("DOMContentLoaded", displayGitHubProjects);
+if (document.readyState === "loading") {
+  document.addEventListener(
+    "DOMContentLoaded",
+    displayGitHubProjects
+  );
+} else {
+  displayGitHubProjects();
+}
