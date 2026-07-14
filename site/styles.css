@@ -206,3 +206,45 @@
     min-height: auto;
   }
 }
+
+.project-links{
+    display:flex;
+    gap:12px;
+    margin-top:auto;
+    flex-wrap:wrap;
+}
+
+.project-link{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 18px;
+    border-radius:10px;
+    text-decoration:none;
+    font-weight:700;
+    transition:.25s;
+}
+
+.project-link:first-child{
+    background:linear-gradient(135deg,var(--primary),var(--primary-2));
+    color:#111;
+}
+
+.project-link.secondary{
+    border:1px solid var(--line);
+    background:var(--surface);
+    color:var(--text);
+}
+
+.project-link:hover{
+    transform:translateY(-2px);
+}
+
+.project-card{
+    display:flex;
+    flex-direction:column;
+}
+
+.project-card p{
+    flex-grow:1;
+}

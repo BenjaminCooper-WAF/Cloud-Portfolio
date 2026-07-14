@@ -8,7 +8,14 @@ resource "aws_s3_bucket" "site" {
   bucket        = local.bucket_name
   force_destroy = false
 }
+resource "aws_s3_object" "github_projects_js" {
+  bucket       = aws_s3_bucket.site.id
+  key          = "github-projects.js"
+  source       = "${path.module}/site/github-projects.js"
+  content_type = "application/javascript"
 
+  etag = filemd5("${path.module}/site/github-projects.js")
+}
 resource "aws_s3_bucket_public_access_block" "site" {
   bucket = aws_s3_bucket.site.id
 
@@ -53,6 +60,15 @@ resource "aws_acm_certificate" "site" {
   lifecycle {
     create_before_destroy = true
   }
+}
+
+resource "aws_s3_object" "index" {
+  bucket       = aws_s3_bucket.site.id
+  key          = "index.html"
+  source       = "${path.module}/site/index.html"
+  content_type = "text/html"
+
+  etag = filemd5("${path.module}/site/index.html")
 }
 
 resource "aws_route53_record" "certificate_validation" {

@@ -103,90 +103,85 @@ function createTopicTags(repository) {
   return `<span class="project-tag">GitHub Project</span>`;
 }
 
-function createProjectCard(repository) {
+function createProjectCard(repository, index) {
   const title = formatRepositoryName(repository.name);
 
   const description =
     repository.description ||
-    "Explore the source code, infrastructure configuration and project documentation on GitHub.";
+    "Explore the source code, infrastructure configuration and project documentation.";
 
-  const language = repository.language || "Code";
+  const topics = repository.topics ?? [];
 
-  const languageIcon =
-    languageIcons[repository.language] || "fa-solid fa-code";
+  const tags =
+    topics.length > 0
+      ? topics
+          .slice(0, 4)
+          .map((topic) => `<span>${escapeHTML(topic)}</span>`)
+          .join("")
+      : `<span>${escapeHTML(repository.language || "GitHub")}</span>`;
 
-  const liveProjectLink =
+  const label = (
+    [
+      repository.language,
+      ...topics.slice(0, 2),
+    ]
+      .filter(Boolean)
+      .join(" • ") || "GITHUB PROJECT"
+  ).toUpperCase();
+
+  const demoButton =
     repository.homepage && repository.homepage.trim() !== ""
       ? `
         <a
           href="${escapeHTML(repository.homepage)}"
-          class="project-link project-link-secondary"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="View live version of ${escapeHTML(title)}"
+          class="project-link secondary"
         >
-          <i class="fa-solid fa-arrow-up-right-from-square"></i>
           Live Demo
         </a>
       `
       : "";
 
   return `
-    <article class="github-project-card">
-      <div class="project-card-top">
-        <div class="project-icon" aria-hidden="true">
-          <i class="fa-solid fa-folder-open"></i>
-        </div>
+    <article class="project-card">
 
-        <span class="project-updated">
-          Updated ${formatDate(repository.pushed_at)}
-        </span>
+      <div class="project-number">
+        ${String(index + 1).padStart(2, "0")}
       </div>
+
+      <p class="project-label">
+        ${escapeHTML(label)}
+      </p>
 
       <h3>${escapeHTML(title)}</h3>
 
-      <p class="project-description">
-        ${escapeHTML(description)}
-      </p>
+      <p>${escapeHTML(description)}</p>
 
       <div class="project-tags">
-        ${createTopicTags(repository)}
-      </div>
-
-      <div class="project-metadata">
-        <span>
-          <i class="${languageIcon}" aria-hidden="true"></i>
-          ${escapeHTML(language)}
-        </span>
-
-        <span>
-          <i class="fa-regular fa-star" aria-hidden="true"></i>
-          ${repository.stargazers_count ?? 0}
-        </span>
-
-        <span>
-          <i class="fa-solid fa-code-fork" aria-hidden="true"></i>
-          ${repository.forks_count ?? 0}
-        </span>
+        ${tags}
       </div>
 
       <div class="project-links">
+
         <a
           href="${escapeHTML(repository.html_url)}"
-          class="project-link"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="View ${escapeHTML(title)} source code on GitHub"
+          class="project-link"
         >
           <i class="fa-brands fa-github"></i>
           Source Code
         </a>
 
-        ${liveProjectLink}
+        ${demoButton}
+
       </div>
+
     </article>
   `;
 }
+
 
 async function fetchGitHubProjects() {
   const endpoint =
@@ -256,8 +251,8 @@ async function displayGitHubProjects() {
     }
 
     projectsGrid.innerHTML = selectedRepositories
-      .map(createProjectCard)
-      .join("");
+  .map((repo, index) => createProjectCard(repo, index))
+  .join("");
   } catch (error) {
     console.error("Unable to load GitHub repositories:", error);
 
